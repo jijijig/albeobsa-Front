@@ -1,10 +1,22 @@
+"use client";
 import React from "react";
 import styled from "styled-components";
 
 export default function Home() {
   return (
-  <div>
-    
-  </div>
+  <Container>
+    <p>
+      Hello, world!
+    </p>
+  </Container>
   );
 }
+
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  background-color: #f0f0f0;
+`;
