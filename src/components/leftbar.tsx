@@ -13,10 +13,10 @@ const categories = [
     { id: 7, name: '로그인', path: '/login' },
 ];
 
-export default function leftbar() {
+export default function Leftbar() {
     const router = useRouter();
 
-    const handleClick = (path) => {
+    const handleClick = (path: string) => {
         router.push(path);
     };
     return (

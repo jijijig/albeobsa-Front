@@ -32,6 +32,7 @@ body {
 }
 .contents-Right-Container {
     margin: 0px;
+    padding: 0px;
     background-color: #e7ff854d;
     align-items: center;
     width: 80%;
