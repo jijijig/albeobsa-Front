@@ -59,6 +59,7 @@ const leftbarstyle = css`
         line-height: 18px;
         align-items: center;
         border-radius: 0 100px 100px 0;
+        cursor: pointer;
     }
     .icon {
         width: 20px;

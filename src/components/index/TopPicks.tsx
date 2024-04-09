@@ -20,7 +20,6 @@ export default function TopPicks() {
                     </div>
                 </div>
             </div>
-            dfsd
         </div>
     );
 }
@@ -33,7 +32,7 @@ const styles = css`
     .container {
         margin: 0 auto;
         padding: 0 15px;
-        width: 80%;
+        width: 90%;
 
         .username_picks {
             font-family: Poppins;
