@@ -109,7 +109,7 @@ const style = css`
   }
   .second {
     margin: 0;
-    width: 80%;
+    width: 75%;
     p {
       margin: 10px 0;
       font-family: Poppins;
@@ -134,7 +134,6 @@ const style = css`
     .third-right {
       width: 20%;
       height: 1px;
-      background-color: red;
     }
   }
   .comment {

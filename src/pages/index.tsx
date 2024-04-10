@@ -7,7 +7,7 @@ import Image from "next/image";
 export default function Home() {
   return (
     <div css={styles}>
-      <div>
+      <div className="topicks">
         <TopPicks />
       </div>
       <div className="second">
@@ -23,10 +23,18 @@ export default function Home() {
 const styles = css`
   margin 0;
   height: 100%;
-  width: 80%;
 
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: top;
+  align-items: center;
+.topicks{
+  width: 1023px;
+}
   .second {
     margin-top: 37px;
+    width: 1023px;
   }
   .ad{
     margin-top: 33px;
