@@ -4,6 +4,7 @@ import TopPicks from "@/components/index/TopPicks";
 import Lank from "@/components/index/Lank";
 import Community from "@/components/index/community";
 import Deal from "@/components/index/deal/deal";
+import Image from "next/image";
 export default function Home() {
   return (
     <div css={styles}>
@@ -13,9 +14,19 @@ export default function Home() {
       <div className="second">
         <Lank />
       </div>
+      <div className="ad">
+        <Image
+          src="/ad.png"
+          width={500}
+          height={100}
+          layout="responsive"
+          alt="광고 이미지"
+        />
+      </div>
       <div className="community">
         <Community />
       </div>
+
       <div className="deal">
         <Deal />
       </div>
@@ -40,6 +51,12 @@ const styles = css`
     .community {
       display: none;
     }
+  }
+  .ad {
+    margin-top: 37px;
+    border: 2px solid #f0f0f0;
+    border-radius: 10px;
+    overflow: hidden;
   }
   .deal {
     width: 100%;

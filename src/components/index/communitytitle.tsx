@@ -9,7 +9,7 @@ const titlelist = [
     img: "/ad.png",
     nickname: "후엥",
     title: "커뮤니티 인기글",
-    comment: 10,
+    coment: 10,
     views: "조회수",
   },
   {
@@ -17,7 +17,7 @@ const titlelist = [
     img: "/ad.png",
     nickname: "뿌엥",
     title: "커뮤니티 인기글",
-    comment: 10,
+    coment: 10,
     views: "조회수",
   },
   {
@@ -25,7 +25,7 @@ const titlelist = [
     img: "/ad.png",
     nickname: "즐거운 오랑우탄가락지",
     title: "커뮤니티 인기글",
-    comment: 10,
+    coment: 10,
     views: "조회수",
   },
   {
@@ -33,7 +33,7 @@ const titlelist = [
     img: "/ad.png",
     nickname: "행복한 오징어대가리",
     title: "커뮤니티 인기글",
-    comment: 10,
+    coment: 10,
     views: "조회수",
   },
 ];
@@ -48,7 +48,7 @@ export default function communitytitle() {
             <td className="nicknames">작성자</td>
             <td className="titles">제목</td>
             <td>댓글</td>
-            <td></td>
+            <td> </td>
           </tr>
           {titlelist.map((title, index) => (
             <tr key={index}>
@@ -60,11 +60,12 @@ export default function communitytitle() {
                   height={30}
                   alt="상품 이미지"
                 />
+
                 {title.nickname}
               </td>
               <td className="titles">{title.title}</td>
               <td className="comment">
-                <div className="circle">{title.comment}</div>{" "}
+                <div className="circle">{title.coment}</div>
               </td>
               <td className="right">
                 <svg
@@ -98,6 +99,9 @@ export default function communitytitle() {
 const style = css`
   width: 90%;
   height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   .name_title {
     font-weight: 700;
 

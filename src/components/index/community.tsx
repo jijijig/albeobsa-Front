@@ -8,7 +8,7 @@ export default function community() {
     <div css={style}>
       <div className="constents">
         <div className="title">커뮤니티 인기글</div>
-        <div>
+        <div className="communitytitle-box">
           <Communitytitle />
         </div>
         <div className="bottom">
@@ -25,21 +25,26 @@ const style = css`
   background-color: #ffffff;
   border: 2px solid #f0f0f0;
   border-radius: 10px;
+
   .constents {
     width: 100%;
     height: 100%;
     margin: 30px 50px;
     display: flex;
     flex-direction: column;
-    align-items: left;
+    align-items: center;
   }
   .title {
+    width: 100%;
     font-family: Poppins;
     font-size: 16px;
     font-weight: 700;
     line-height: 24px;
     text-align: left;
     margin-bottom: 30px;
+  }
+  .communitytitle-box {
+    width: 100%;
   }
   .bottom {
     width: 100%;
