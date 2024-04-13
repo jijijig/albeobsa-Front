@@ -51,10 +51,10 @@ export default function TopPicks() {
           <div className="Top_Picks_Item">
             <PickItem />
           </div>
-          <div className="Top_Picks_Item">
+          <div className="Top_Picks_Item hidden-when-smalltow">
             <PickItem />
           </div>
-          <div className="Top_Picks_Item">
+          <div className="Top_Picks_Item hidden-when-small">
             <PickItem />
           </div>
         </div>
@@ -90,11 +90,22 @@ const styles = css`
     justify-content: space-between;
 
     .Top_Picks_Item {
-      width: 313px;
+      width: 100%;
+      max-width: 313px;
       height: 164px;
       border-radius: 10px;
       background-color: white;
       border: 2px solid #f0f0f0;
+    }
+    @media (max-width: 900px) {
+      .hidden-when-small {
+        display: none;
+      }
+    }
+    @media (max-width: 650px) {
+      .hidden-when-smalltow {
+        display: none;
+      }
     }
   }
 `;

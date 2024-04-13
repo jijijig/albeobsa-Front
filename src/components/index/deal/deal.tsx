@@ -389,7 +389,7 @@ const styles = css`
   }
   .commentsboxs {
     margin-top: 20px;
-    width: 925px;
+    width: 100%;
     height: 65px;
     border-radius: 100px;
     border: 1px solid #e0e0e0;
