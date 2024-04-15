@@ -1,9 +1,32 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import LankNumber from "./LankNumber";
+import axios from "axios";
 
+interface Item {
+  id: number;
+  img: string;
+  name: string;
+  shoppingmall: string;
+  community: string;
+  comments: number;
+  likes: number;
+}
 export default function Lank() {
+  const [data, setData] = useState<Item[]>([]);
+
+  useEffect(() => {
+    axios
+      .get("/api/Lank")
+      .then((response) => {
+        setData(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data: ", error);
+      });
+  }, []);
+
   return (
     <div css={style}>
       <div className="contanier">
@@ -41,15 +64,19 @@ export default function Lank() {
 
           <div className="lanklist">
             <div className="list">
-              <div>
-                <LankNumber />
-              </div>
-              <div className="hidden-second">
-                <LankNumber />
-              </div>
-              <div className="hidden-first">
-                <LankNumber />
-              </div>
+              {data.map((item, index) => (
+                <div key={index}>
+                  <LankNumber
+                    id={item.id}
+                    img={item.img}
+                    name={item.name}
+                    shoppingmall={item.shoppingmall}
+                    community={item.community}
+                    comments={item.comments}
+                    likes={item.likes}
+                  />
+                </div>
+              ))}
             </div>
             <div className="svg-container">
               <svg

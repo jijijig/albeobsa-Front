@@ -14,7 +14,7 @@ export default function TopPicks() {
 
   useEffect(() => {
     axios
-      .get("/api/hello")
+      .get("/api/topPicks")
       .then((response) => {
         setData(response.data);
       })
