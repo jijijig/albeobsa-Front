@@ -2,13 +2,39 @@
 import { css } from "@emotion/react";
 import Logo from "@/styles/icon/logo";
 import { useRouter } from "next/router";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import Image from "next/image";
+
+interface User {
+  img: string;
+  email: string;
+  name: string;
+}
 
 export default function Navbar() {
   const router = useRouter();
+  const [search, setSearch] = useState("");
+  const [user, setUser] = useState<User[]>([]);
 
   const handleClick = () => {
     router.push("/");
   };
+
+  useEffect(() => {
+    axios
+      .get("/api/login")
+      .then((response) => {
+        setUser(response.data);
+      })
+      .catch((error) => {
+        console.error("로그인 실패 ", error);
+      });
+  }, []);
+  useEffect(() => {
+    console.log(search);
+  }, [search]);
+
   return (
     <div css={container}>
       <div className="logo" onClick={() => handleClick()}>
@@ -36,12 +62,18 @@ export default function Navbar() {
 
       <div className="nav-right">
         <div className="input">
-          <input type="text" placeholder="검색" />
+          <input
+            type="text"
+            placeholder="검색"
+            onChange={(event) => setSearch(event.target.value)}
+          />
         </div>
 
         <div className="user-box">
-          <div className="img-box"></div>
-          USER PROFILE
+          <div className="img-box">
+            <Image src={user.img} width={36} height={36} alt="user profile" />
+          </div>
+          {user.name}
         </div>
         <div>
           <svg
@@ -115,6 +147,7 @@ const container = css`
     height: 36px;
     border-radius: 50%;
     background-color: black;
+    overflow: hidden;
   }
   .user-box {
     display: flex;

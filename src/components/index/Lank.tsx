@@ -15,6 +15,7 @@ interface Item {
 }
 export default function Lank() {
   const [data, setData] = useState<Item[]>([]);
+  const [visibleCount, setVisibleCount] = useState(3);
 
   useEffect(() => {
     axios
@@ -25,6 +26,23 @@ export default function Lank() {
       .catch((error) => {
         console.error("Error fetching data: ", error);
       });
+    function handleResize() {
+      const width = window.innerWidth;
+      if (width < 800) {
+        setVisibleCount(1);
+      } else if (width < 1200) {
+        setVisibleCount(2);
+      } else {
+        setVisibleCount(3);
+      }
+    }
+
+    window.addEventListener("resize", handleResize);
+    handleResize();
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   return (
@@ -64,18 +82,8 @@ export default function Lank() {
 
           <div className="lanklist">
             <div className="list">
-              {data.map((item, index) => (
-                <div key={index}>
-                  <LankNumber
-                    id={item.id}
-                    img={item.img}
-                    name={item.name}
-                    shoppingmall={item.shoppingmall}
-                    community={item.community}
-                    comments={item.comments}
-                    likes={item.likes}
-                  />
-                </div>
+              {data.slice(0, visibleCount).map((item) => (
+                <LankNumber key={item.id} {...item} />
               ))}
             </div>
             <div className="svg-container">
