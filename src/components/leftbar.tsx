@@ -2,20 +2,20 @@
 import React from "react";
 import { css } from "@emotion/react";
 import { useRouter } from "next/router";
+import Commnity from "@/styles/icon/community";
+import Hotdeil from "@/styles/icon/hotdeil";
 import Mainpage from "@/styles/icon/mainpage";
-import Community from "@/styles/icon/community";
-import Revew from "@/styles/icon/revew";
 import Rank from "@/styles/icon/rank";
-import Hotdeal from "@/styles/icon/hotdeil";
-import Setting from "@/styles/icon/setting";
+import Reviews from "@/styles/icon/revew";
+import Settings from "@/styles/icon/setting";
 
 const categories = [
-  { id: 1, name: "메인 페이지", path: "/", icon: <Mainpage /> },
-  { id: 2, name: "커뮤니티", path: "/community", icon: <Community /> },
-  { id: 3, name: "후기", path: "/reviews", icon: <Revew /> },
-  { id: 4, name: "랭킹", path: "/ranking", icon: <Rank /> },
-  { id: 5, name: "핫딜", path: "/hotdeals", icon: <Hotdeal /> },
-  { id: 6, name: "설정", path: "/settings", icon: <Setting /> },
+  { id: 1, name: "메인 페이지", path: "/", components: <Mainpage /> },
+  { id: 2, name: "커뮤니티", path: "/community", components: <Commnity /> },
+  { id: 3, name: "후기", path: "/reviews", components: <Reviews /> },
+  { id: 4, name: "랭킹", path: "/ranking", components: <Rank /> },
+  { id: 5, name: "핫딜", path: "/hotdeals", components: <Hotdeil /> },
+  { id: 6, name: "설정", path: "/settings", components: <Settings /> },
   { id: 7, name: "로그인", path: "/login" },
 ];
 
@@ -37,7 +37,7 @@ export default function Leftbar() {
                 : undefined
             }
             onClick={() => handleClick(category.path)}>
-            <div className="icon">{category.icon}</div>
+            <div className="icon"></div>
             {category.name}
           </li>
         ))}
@@ -74,9 +74,7 @@ const leftbarstyle = css`
   .icon {
     width: 20px;
     height: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    background-color: black;
     margin-right: 10px;
   }
 `;

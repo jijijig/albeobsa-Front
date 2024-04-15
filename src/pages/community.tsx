@@ -15,13 +15,7 @@ export default function community() {
           </div>
         </div>
         <div className="ad">
-          <Image
-            src="/ad.png"
-            width={500}
-            height={100}
-            layout="responsive"
-            alt="광고 이미지"
-          />
+          <Image src="/ad.png" width={500} height={100} alt="광고 이미지" />
         </div>
       </div>
     </div>

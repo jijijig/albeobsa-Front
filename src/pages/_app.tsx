@@ -8,6 +8,7 @@ import { Inter } from "next/font/google";
 
 const inter = Inter({ subsets: ["latin"] });
 
+// Emotion CSS 정의
 const appContainer = css`
   display: flex;
   flex-direction: column;
@@ -17,6 +18,7 @@ const navBarContainer = css`
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 80px;
 `;
 
 const contentsContainer = css`
@@ -32,10 +34,9 @@ const contentsLeftContainer = css`
   align-items: center;
   margin: 0px;
   background-color: white;
+
   width: 20%;
-  @media (max-width: 1400px) {
-    display: none;
-  }
+  height: 100vh;
 `;
 
 const contentsRightContainer = css`
@@ -45,9 +46,8 @@ const contentsRightContainer = css`
   background-color: #e7ff854d;
   border: 1px solid #f0f0f0;
   align-items: center;
-  width: 100%;
+  width: 80%;
   height: 100%;
-  min-height: 100vh;
 `;
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -60,14 +60,16 @@ export default function App({ Component, pageProps }: AppProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div css={appContainer} className={inter.className}>
-        <div css={navBarContainer}>
+        <div css={navBarContainer} className="nav-barContainer">
           <Navbar />
         </div>
-        <div css={contentsContainer}>
-          <div css={contentsLeftContainer}>
+        <div css={contentsContainer} className="contents-Container">
+          <div css={contentsLeftContainer} className="contents-Left-Container">
             <Leftbar />
           </div>
-          <div css={contentsRightContainer}>
+          <div
+            css={contentsRightContainer}
+            className="contents-Right-Container">
             <Component {...pageProps} />
           </div>
         </div>

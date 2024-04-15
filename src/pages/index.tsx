@@ -5,6 +5,7 @@ import Lank from "@/components/index/Lank";
 import Community from "@/components/index/community";
 import Deal from "@/components/index/deal/deal";
 import Image from "next/image";
+
 export default function Home() {
   return (
     <div css={styles}>
