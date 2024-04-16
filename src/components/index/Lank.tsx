@@ -28,11 +28,13 @@ export default function Lank() {
       });
     function handleResize() {
       const width = window.innerWidth;
-      if (width < 800) {
+      if (width < 550) {
+        setVisibleCount(3);
+      } else if (width < 800) {
         setVisibleCount(1);
       } else if (width < 1200) {
         setVisibleCount(2);
-      } else {
+      } else if (width < 1600) {
         setVisibleCount(3);
       }
     }
@@ -118,16 +120,18 @@ export default function Lank() {
 }
 
 const style = css`
-  display: flex;
-  align-items: center;
-  justify-content: center;
+display: flex;
+align-items: center;
+justify-content: center;
+height: auto;
 
   .contanier {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 311px;
+    height: 100%;
     border-radius: 10px;
     border: 2px solid #f0f0f0;
     background-color: white;
@@ -136,10 +140,11 @@ const style = css`
     font-weight: 700;
     line-height: 24px;
     text-align: left;
+    overflow: hidden;
+
   }
   .tops {
     width: 100%;
-
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -149,16 +154,15 @@ const style = css`
   }
   .contanierin {
     width: 90%;
-    height: 90%;
-    justify-content: center;
-    align-items: left;
+    height: auto; 
     display: flex;
     flex-direction: column;
+    align-items: start;
   }
   .lanklist {
     margin-top: 20px;
     display: flex;
-    justify-content: space-between;
+    justify-content: start;
     width: 100%;
     height: 200px;
     align-items: center;
@@ -166,8 +170,8 @@ const style = css`
   .list {
     width: 100%;
     display: flex;
-    justify-content: space-between;
-    gap: 100px;
+    gap: 10px;
+    align-items: start;
   }
   .svg-container {
     width: 44px;
@@ -185,4 +189,20 @@ const style = css`
       display: none;
     }
   }
+  @media (max-width: 550px) {
+    .list{
+      flex-direction: column;
+      justify-content: center;
+      width: 100%;
+      align-items: center;
+    }
+    .lanklist{
+      flex-direction: column;
+      justify-content: center;
+    }
+    .tops{
+      display: none;
+    }
+    height: 800px;
+   
 `;

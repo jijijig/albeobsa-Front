@@ -226,7 +226,7 @@ const container = css`
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
-  position: relative;
+  
 
   .slide-menu {
     display: flex;
