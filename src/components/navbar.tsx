@@ -17,6 +17,12 @@ export default function Navbar() {
   const [search, setSearch] = useState("");
   const [user, setUser] = useState<User[]>([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [menu, setMenu] = useState(false);
+
+  const toggleMenu = () => {
+    setMenu((prevMenu) => !prevMenu);
+    console.log(menu);
+  };
 
   const handleClick = () => {
     router.push("/");
@@ -31,9 +37,9 @@ export default function Navbar() {
 
   useEffect(() => {
     axios
-      .get("/api/login")
+      .get(process.env.NEXT_PUBLIC_API_URL + "/api/member/login")
       .then((response) => {
-        setUser(response.data);
+        console.log(response.data);
       })
       .catch((error) => {
         console.error("로그인 실패 ", error);
@@ -148,6 +154,29 @@ export default function Navbar() {
           </svg>
         </div>
       </div>
+      <div className="nav-rightnext" onClick={toggleMenu}>
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M3 8H21"
+            stroke="#BCEB00"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M3 16H21"
+            stroke="#BCEB00"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      </div>
     </div>
   );
 }
@@ -219,4 +248,15 @@ const container = css`
     line-height: 17.58px;
     text-align: center;
   }
+  .nav-rightnext {
+    display: none;
+    cursor: pointer;
+  } 
+  @media (max-width: 550px) {
+    .nav-right{
+      display: none;
+    }
+    .nav-rightnext {
+    display: block;
+    }
 `;
