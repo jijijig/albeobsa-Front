@@ -1,5 +1,10 @@
-import React from 'react';
+import React from "react";
+import Community from "@/components/index/community";
 
 export default function community() {
-    return <div>community</div>;
+  return (
+    <div>
+      <Community />
+    </div>
+  );
 }
