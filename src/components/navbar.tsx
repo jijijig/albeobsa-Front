@@ -5,12 +5,27 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import Mainpage from "@/styles/icon/mainpage";
+import Community from "@/styles/icon/community";
+import Revew from "@/styles/icon/revew";
+import Rank from "@/styles/icon/rank";
+import Hotdeal from "@/styles/icon/hotdeil";
+import Setting from "@/styles/icon/setting";
 
 interface User {
   img: string;
   email: string;
   name: string;
 }
+const categories = [
+  { id: 1, name: "메인 페이지", path: "/", icon: <Mainpage /> },
+  { id: 2, name: "커뮤니티", path: "/community", icon: <Community /> },
+  { id: 3, name: "후기", path: "/reviews", icon: <Revew /> },
+  { id: 4, name: "랭킹", path: "/ranking", icon: <Rank /> },
+  { id: 5, name: "핫딜", path: "/hotdeals", icon: <Hotdeal /> },
+  { id: 6, name: "설정", path: "/settings", icon: <Setting /> },
+  { id: 7, name: "로그인", path: "/login" },
+];
 
 export default function Navbar() {
   const router = useRouter();
@@ -18,6 +33,10 @@ export default function Navbar() {
   const [user, setUser] = useState<User[]>([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [menu, setMenu] = useState(false);
+
+  const handleClicks = (path: string) => {
+    router.push(path);
+  };
 
   const toggleMenu = () => {
     setMenu((prevMenu) => !prevMenu);
@@ -176,6 +195,24 @@ export default function Navbar() {
             strokeLinejoin="round"
           />
         </svg>
+
+        <div className={`slide-menu ${menu ? "open" : ""}`}>
+          <ul>
+            {categories.map((category) => (
+              <li
+                key={category.id}
+                css={
+                  router.pathname === category.path
+                    ? activeCategoryStyle
+                    : undefined
+                }
+                onClick={() => handleClicks(category.path)}>
+                <div className="icon">{category.icon}</div>
+                {category.name}
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   );
@@ -184,11 +221,74 @@ export default function Navbar() {
 const container = css`
   display: flex;
   padding: 10px 0px;
-  width: 80%;
+  width: 100%;
   height: 100%;
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
+  position: relative;
+
+  .slide-menu {
+    display: flex;
+    padding: 10px 0px;
+    height: 100%;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    position: fixed;
+    width: 250px; 
+    background-color: white;
+    top: 52px;
+    right: -250px;
+    transition: right 0.3s; 
+    z-index: 1000; 
+  }
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  li {
+    display: flex;
+    width: 100%;
+    height: 54px;
+    padding-left: 50px;
+    font-family: Poppins;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 18px;
+    align-items: center;
+    border-radius: 0 100px 100px 0;
+    cursor: pointer;
+  }
+  .icon {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+  }
+
+
+  .slide-menu.open {
+    right: 0;
+  }
+  
+  .nav-rightnext {
+    display: none;
+    cursor: pointer;
+  }
+
+  @media (max-width: 550px) {
+    .nav-right {
+      display: none;
+    }
+    .nav-rightnext {
+      display: block;
+    }
+  }
+
   .logo {
     display: flex;
     gap: 10px;
@@ -259,4 +359,8 @@ const container = css`
     .nav-rightnext {
     display: block;
     }
+`;
+
+const activeCategoryStyle = css`
+  background-color: #e7ff85;
 `;
