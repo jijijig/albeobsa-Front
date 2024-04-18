@@ -53,7 +53,7 @@ export default function Navbar() {
       setIsLoggedIn(true);
     }
   }, []);
-
+  /*
   useEffect(() => {
     axios
       .get(process.env.NEXT_PUBLIC_API_URL + "/api/member/login")
@@ -63,7 +63,7 @@ export default function Navbar() {
       .catch((error) => {
         console.error("로그인 실패 ", error);
       });
-  }, []);
+  }, []);*/
   useEffect(() => {
     console.log(search);
   }, [search]);
