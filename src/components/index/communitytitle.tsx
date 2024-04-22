@@ -42,7 +42,7 @@ const titlelist = [
 export default function communitytitle() {
   useEffect(() => {
     axios
-      .get(process.env.NEXT_PUBLIC_API_URL + "/api/member/join ")
+      .get("https://jijijig.duckdns.org/api/crawling/ppomppu")
       .then((response) => {
         console.log(response);
       })
