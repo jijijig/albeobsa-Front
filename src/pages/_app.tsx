@@ -42,7 +42,7 @@ const contentsRightContainer = css`
   margin: 0px;
   padding: 0px;
   height: 100%;
-  background-color: #e7ff854d;
+
   border: 1px solid #f0f0f0;
   align-items: center;
   width: 100%;
