@@ -1,10 +1,26 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import React, { useEffect } from "react";
+import axios from "axios";
 import TopPicks from "@/components/index/TopPicks";
 import Lank from "@/components/index/Lank";
 import Community from "@/components/index/community";
 import Deal from "@/components/index/deal/deal";
 export default function Home() {
+  useEffect(() => {
+    console.log("서버에 데이터 요청을 시작합니다. 게시판");
+    axios
+      .get("https://jijijig.duckdns.org/api/boards/")
+      .then((response) => {
+        console.log("서버 응답: ㅔㅔ", response);
+        console.log("데이터 처리를 시작합니다.");
+
+        console.log("데이터 처리 완료.");
+      })
+      .catch((error) => {
+        console.error("게시글 긁어오기 실패 ㅔㅔㄴ", error);
+      });
+  }, []);
   return (
     <div css={styles}>
       <div className="topicks">

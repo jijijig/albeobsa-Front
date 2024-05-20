@@ -42,9 +42,9 @@ const titlelist = [
 export default function communitytitle() {
   useEffect(() => {
     axios
-      .get("https://jijijig.duckdns.org/api/crawling/ppomppu")
+      .get("https://jijijig.duckdns.org/api/crawling")
       .then((response) => {
-        console.log(response);
+        console.log("긁어오기 성공", response);
       })
       .catch((error) => {
         console.error("게시글 긁어오기 실패 ", error);
