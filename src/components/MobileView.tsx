@@ -16,7 +16,16 @@ const mobileContainer = css`
     align-items: center;
   }
   .bottom {
-    margin-top: 20 px;
+    margin: 30px;
+    padding: 20px;
+  }
+  .lank {
+    margin-top: 20px;
+    border: 1px solid #f0f0f0;
+    border-radius: 10px;
+    background-color: white;
+    display: flex;
+    align-items: center;
   }
 `;
 
@@ -87,7 +96,9 @@ const MobileView = () => {
       </div>
       <div className="bottom">
         <Recommend />
-        <Lank />
+        <div className="lank">
+          <Lank />
+        </div>
       </div>
     </div>
   );

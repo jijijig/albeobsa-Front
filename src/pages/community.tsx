@@ -13,7 +13,6 @@ export default function community() {
       </div>
       <div className="second">
         <Freeboard />
-        <Alddle />
       </div>
     </div>
   );
@@ -34,8 +33,9 @@ const style = css`
   }
   .second {
     display: flex;
-    justify-content: space-between;
+    align-items: center;
     gap: 10px;
     margin-top: 37px;
+    justify-content: center;
   }
 `;
