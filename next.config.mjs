@@ -2,7 +2,14 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['cdn.algumon.com']
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'cdn.algumon.com',
+        port: '',
+        pathname: '/**',
+      },
+    ],
   },
 };
 

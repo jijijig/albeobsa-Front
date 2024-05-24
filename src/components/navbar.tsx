@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Mainpage from "@/styles/icon/mainpage";
 import Community from "@/styles/icon/community";
-import Revew from "@/styles/icon/revew";
+import Revew from "@/styles/icon/calculator";
 import Rank from "@/styles/icon/rank";
 import Hotdeal from "@/styles/icon/hotdeil";
 import Setting from "@/styles/icon/setting";
@@ -77,9 +77,9 @@ export default function Navbar() {
           <path
             d="M18.7612 37.9776H25.5522C27.0149 37.9776 29.5 36 29.5 33.3454C29.5 29.5 27 28.7132 25 28.7132C24.4776 28.7132 25.0224 28.5 24.5 28.5C17.5 14.5 16.5 7.99995 13 8.4999C13 9.4999 10 21.4999 6.22388 28.7132H5.1791C2.8806 28.7132 1 30.8087 1 33.3454C1 35.8821 2.8806 37.9776 5.1791 37.9776H10.403H18.7612Z"
             stroke="#A775FF"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           />
           <path
             d="M17.75 30.7633H13.25L12.4211 33H11L14.7303 23H16.2845L20 33H18.5789L17.75 30.7633ZM17.3651 29.6955L15.5 24.6162L13.6349 29.6955H17.3651Z"

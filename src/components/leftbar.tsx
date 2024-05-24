@@ -4,7 +4,7 @@ import { css } from "@emotion/react";
 import { useRouter } from "next/router";
 import Mainpage from "@/styles/icon/mainpage";
 import Community from "@/styles/icon/community";
-import Revew from "@/styles/icon/revew";
+import Revew from "@/styles/icon/calculator";
 import Rank from "@/styles/icon/rank";
 import Hotdeal from "@/styles/icon/hotdeil";
 import Setting from "@/styles/icon/setting";
@@ -12,7 +12,7 @@ import Setting from "@/styles/icon/setting";
 const categories = [
   { id: 1, name: "메인 페이지", path: "/", icon: <Mainpage /> },
   { id: 2, name: "커뮤니티", path: "/community", icon: <Community /> },
-  { id: 3, name: "후기", path: "/reviews", icon: <Revew /> },
+  { id: 3, name: "계산기", path: "/calculator", icon: <Revew /> },
   { id: 4, name: "랭킹", path: "/ranking", icon: <Rank /> },
   { id: 5, name: "핫딜", path: "/hotdeals", icon: <Hotdeal /> },
   { id: 6, name: "설정", path: "/settings", icon: <Setting /> },
