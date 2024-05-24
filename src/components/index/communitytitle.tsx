@@ -40,16 +40,6 @@ const titlelist = [
 ];
 
 export default function communitytitle() {
-  useEffect(() => {
-    axios
-      .get("https://jijijig.duckdns.org/api/member/authenticate?code=hello  ")
-      .then((response) => {
-        console.log("긁어오기 성공", response);
-      })
-      .catch((error) => {
-        console.error("로그인 긁어오기 실패 ", error);
-      });
-  }, []);
   return (
     <div css={style}>
       <table>

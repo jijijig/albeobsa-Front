@@ -12,7 +12,7 @@ import Setting from "@/styles/icon/setting";
 const categories = [
   { id: 1, name: "메인 페이지", path: "/", icon: <Mainpage /> },
   { id: 2, name: "커뮤니티", path: "/community", icon: <Community /> },
-  { id: 3, name: "계산기", path: "/calculator", icon: <Revew /> },
+  { id: 3, name: "핫딜계산기", path: "/calculator", icon: <Revew /> },
   { id: 4, name: "랭킹", path: "/ranking", icon: <Rank /> },
   { id: 5, name: "핫딜", path: "/hotdeals", icon: <Hotdeal /> },
   { id: 6, name: "설정", path: "/settings", icon: <Setting /> },

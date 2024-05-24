@@ -5,11 +5,12 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'cdn.algumon.com',
+        hostname: 'example.com',
         port: '',
-        pathname: '/**',
+        pathname: '/path/to/**',
       },
     ],
+    domains: ['cdn.algumon.com', 'img.ruliweb.com', 'cdn2.ppomppu.co.kr']
   },
 };
 
