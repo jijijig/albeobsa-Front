@@ -160,39 +160,65 @@ const ProductCalculator: React.FC = () => {
       </div>
       <div className="calculator-section">
         <h2>{selectedProductName} 계산기</h2>
-        <div className="input-section">
-          <div>
-            <label>총 가격</label>
-            <input
-              type="number"
-              value={totalPrice}
-              onChange={handlePriceChange}
-            />
+        <div className="input-set">
+          <div className="input-section">
+            <div>
+              <input
+                type="number"
+                value={totalPrice}
+                onChange={handlePriceChange}
+                placeholder="총 가격"
+              />
+              <label>원</label>
+            </div>
+            <div className="secons-input">
+              <div>
+                <input
+                  type="number"
+                  value={quantity}
+                  onChange={handleQuantityChange}
+                />
+                <label>봉</label>
+              </div>
+              <div>
+                <input
+                  type="number"
+                  value={weight}
+                  onChange={handleWeightChange}
+                />
+                <label>g/봉</label>
+              </div>
+            </div>
+            <button>구성 추가</button>
           </div>
-          <div>
-            <label>무게</label>
-            <input
-              type="number"
-              value={weight}
-              onChange={handleWeightChange}
-            />{" "}
-            g/봉
+          <div className="result-section">
+            <table>
+              <thead>
+                <tr>
+                  <th>항목</th>
+                  <th>값</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>총 중량</td>
+                  <td>{totalWeight}g</td>
+                </tr>
+                <tr>
+                  <td>가격</td>
+                  <td>{totalPrice}원</td>
+                </tr>
+                <tr>
+                  <td>100g당 가격</td>
+                  <td>{pricePer100g.toFixed(2)}원/100g</td>
+                </tr>
+                <tr>
+                  <td>1050g당 가격</td>
+                  <td>{pricePer1050g.toFixed(2)}원/1050g</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-          <div>
-            <label>봉지 수</label>
-            <input
-              type="number"
-              value={quantity}
-              onChange={handleQuantityChange}
-            />
-          </div>
-          <button>구성 추가</button>
-        </div>
-        <div className="result-section">
-          <div>총 중량: {totalWeight}g</div>
-          <div>가격: {totalPrice}원</div>
-          <div>100g당 가격: {pricePer100g.toFixed(2)}원/100g</div>
-          <div>1050g당 가격: {pricePer1050g.toFixed(2)}원/1050g</div>
         </div>
       </div>
     </div>
@@ -268,6 +294,21 @@ const calculatorStyle = css`
   }
 
   .calculator-section {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    input {
+      width: 100%;
+    }
+    .secons-input {
+      display: flex;
+      gap: 20px;
+    }
+    .input-set {
+      display: flex;
+      gap: 20px;
+    }
+
     h2 {
       margin-bottom: 20px;
     }
@@ -287,6 +328,8 @@ const calculatorStyle = css`
           flex: 2;
           padding: 5px;
           margin-left: 10px;
+          border-radius: 5px;
+          border: 1px solid #ddd;
         }
       }
 
@@ -303,9 +346,20 @@ const calculatorStyle = css`
 
     .result-section {
       margin-top: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
+      width: 100%;
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        th,
+        td {
+          border: 1px solid #ddd;
+          padding: 8px;
+          text-align: center;
+        }
+        th {
+          background-color: #e0ceff;
+        }
+      }
     }
   }
 `;

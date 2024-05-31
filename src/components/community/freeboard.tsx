@@ -2,7 +2,7 @@
 
 import { css } from "@emotion/react";
 import React from "react";
-import { useRouter } from "next/router"; // Next.js 라우터 사용
+import { useRouter } from 'next/router'; // Next.js 라우터 사용
 
 const style = css`
   display: flex;
@@ -13,7 +13,7 @@ const style = css`
   border-radius: 10px;
   margin: 30px;
   box-sizing: border-box;
-
+  
   .contents,
   .second {
     flex: 1;
@@ -26,14 +26,14 @@ const style = css`
     border-radius: 10px;
     margin: 0 10px;
   }
-
+  
   .list-item {
     width: 100%;
     padding: 10px 0;
   }
-
+  
   .list-item h3 {
-    font-family: "Poppins", sans-serif;
+    font-family: 'Poppins', sans-serif;
     font-size: 14px;
     font-weight: 500;
     line-height: 20px;
@@ -47,13 +47,13 @@ const style = css`
     cursor: pointer;
     transition: background-color 0.3s;
   }
-
+  
   .list-item h3:hover {
     background-color: #e0e0e0;
   }
-
+  
   h2 {
-    font-family: "Poppins", sans-serif;
+    font-family: 'Poppins', sans-serif;
     font-size: 16px;
     font-weight: 700;
     line-height: 24px;

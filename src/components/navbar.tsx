@@ -54,16 +54,6 @@ export default function Navbar() {
     }
   }, []);
 
-  useEffect(() => {
-    axios
-      .get(process.env.NEXT_PUBLIC_API_URL + "/api/crawling")
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.error("로그인 실패 ", error);
-      });
-  }, []);
 
   return (
     <div css={container}>
