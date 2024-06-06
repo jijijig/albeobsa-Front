@@ -1,24 +1,46 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import TopPicks from "@/components/index/TopPicks";
 import Lank from "@/components/index/Lank";
 import Community from "@/components/index/community";
 import Deal from "@/components/index/deal/deal";
+import RealTimeSearch from "@/components/index/RealTimeSearch";
+import Hotbox from "@/components/hotdeal/hotbox";
+
+interface HotDeal {
+  label: string;
+  title: string;
+  name: string;
+  image: string;
+  link: string;
+  dateTime: string;
+  views: number;
+  recommendCnt: number;
+  unrecommendCnt: number;
+  commentCnt: number;
+  open: boolean;
+}
 export default function Home() {
+  const [hotDeals, setHotDeals] = useState<HotDeal[]>([]);
+
   useEffect(() => {
+    const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/crawling/hotdeal`;
     console.log("서버에 데이터 요청을 시작합니다. 게시판");
+
     axios
-      .get(`${process.env.NEXT_PUBLIC_API_URL}/api/crawling/hotdeal`)
+      .get<HotDeal[]>(apiUrl)
       .then((response) => {
-        console.log("서버 응답: ㅔㅔ", response);
+        console.log("서버 응답:", response.data);
+        setHotDeals(response.data);
         console.log("데이터 처리를 시작합니다.");
       })
       .catch((error) => {
-        console.error("게시글 긁어오기 실패 ㅔㅔㄴ", error);
+        console.error("게시글 긁어오기 실패", error);
       });
   }, []);
+
   return (
     <div css={styles}>
       <div className="topicks">
@@ -27,11 +49,20 @@ export default function Home() {
       <div className="second">
         <Lank />
       </div>
+      <div className="realtime">
+        <RealTimeSearch />
+      </div>
+
       <div className="community">
         <Community />
       </div>
       <div className="deal">
         <Deal />
+      </div>
+      <div className="hotdeal">
+        {hotDeals.map((deal, index) => (
+          <Hotbox key={index} deal={deal} />
+        ))}
       </div>
     </div>
   );
@@ -56,6 +87,10 @@ const styles = css`
       display: none;
     }
   }
+  .realtime {
+    margin-top: 37px;
+    width: 100%;
+  }
   .deal {
     width: 100%;
     margin-top: 37px;
@@ -63,5 +98,14 @@ const styles = css`
     border-radius: 10px;
     margin-bottom: 50px;
     border: 2px solid #f0f0f0;
+  }
+  .hotdeal {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+
+    margin-top: 37px;
   }
 `;
