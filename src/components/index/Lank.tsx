@@ -13,38 +13,25 @@ interface Item {
   comments: number;
   likes: number;
 }
+
 export default function Lank() {
   const [data, setData] = useState<Item[]>([]);
   const [visibleCount, setVisibleCount] = useState(3);
 
   useEffect(() => {
+    const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/Lank`;
+    console.log("서버에 데이터 요청을 시작합니다. 랭킹");
+
     axios
-      .get("/api/Lank")
+      .get<Item[]>(apiUrl)
       .then((response) => {
+        console.log("서버 응답:", response.data);
         setData(response.data);
+        console.log("랭킹 데이터 처리");
       })
       .catch((error) => {
-        console.error("Error fetching data: ", error);
+        console.error("랭킹 긁어오기 실패", error);
       });
-    function handleResize() {
-      const width = window.innerWidth;
-      if (width < 550) {
-        setVisibleCount(3);
-      } else if (width < 800) {
-        setVisibleCount(1);
-      } else if (width < 1200) {
-        setVisibleCount(2);
-      } else if (width < 1600) {
-        setVisibleCount(3);
-      }
-    }
-
-    window.addEventListener("resize", handleResize);
-    handleResize();
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
   }, []);
 
   return (

@@ -1,45 +1,36 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import { useEffect } from "react";
 import axios from "axios";
-const titlelist = [
-  {
-    date: "2024/04/01",
-    img: "/ad.png",
-    nickname: "후엥",
-    title: "커뮤니티 인기글",
-    comment: 10,
-    views: "조회수",
-  },
-  {
-    date: "2024/04/01",
-    img: "/ad.png",
-    nickname: "뿌엥",
-    title: "커뮤니티 인기글",
-    comment: 10,
-    views: "조회수",
-  },
-  {
-    date: "2024/04/01",
-    img: "/ad.png",
-    nickname: "즐거운 오랑우탄가락지",
-    title: "커뮤니티 인기글",
-    comment: 10,
-    views: "조회수",
-  },
-  {
-    date: "2024/04/01",
-    img: "/ad.png",
-    nickname: "행복한 오징어대가리",
-    title: "커뮤니티 인기글",
-    comment: 10,
-    views: "조회수",
-  },
-];
 
-export default function communitytitle() {
+interface TitleItem {
+  date: string;
+  img: string;
+  nickname: string;
+  title: string;
+  comment: number;
+  views: string;
+}
+
+export default function CommunityTitle() {
+  const [titleList, setTitleList] = useState<TitleItem[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/api/boards`
+        );
+        setTitleList(response.data);
+      } catch (error) {
+        console.error("border 게시판 긁어오기 실패", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <div css={style}>
       <table>
@@ -51,7 +42,7 @@ export default function communitytitle() {
             <td>댓글</td>
             <td></td>
           </tr>
-          {titlelist.map((title, index) => (
+          {titleList.map((title, index) => (
             <tr key={index}>
               <td className="left">{title.date}</td>
               <td className="nickname">
