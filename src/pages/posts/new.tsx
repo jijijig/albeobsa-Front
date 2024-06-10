@@ -65,7 +65,7 @@ export default function NewPost() {
     };
 
     try {
-      const response = await axios.post("/api/boards/post", newPost);
+      const response = await axios.post("/api/boards", newPost);
       console.log("게시글 생성 성공:", response.data);
       router.push("/"); // 게시글 생성 후 메인 페이지로 이동
     } catch (error) {
@@ -93,7 +93,8 @@ export default function NewPost() {
             theme="snow"
             modules={modules}
             formats={formats}
-            onChange={setValues}
+            value={content}
+            onChange={(value) => setContent(value)}
           />
         </div>
         <div className="form-group">

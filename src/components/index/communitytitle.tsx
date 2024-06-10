@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import axios from "axios";
 
-interface TitleItem {
+interface Title {
   date: string;
   img: string;
   nickname: string;
@@ -14,17 +14,18 @@ interface TitleItem {
 }
 
 export default function CommunityTitle() {
-  const [titleList, setTitleList] = useState<TitleItem[]>([]);
+  const [titleList, setTitleList] = useState<Title[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/boards`
+          `${process.env.NEXT_PUBLIC_API_URL}/api/crawling/ranking`
         );
         setTitleList(response.data);
+        console.log(response.data);
       } catch (error) {
-        console.error("border 게시판 긁어오기 실패", error);
+        console.error("Error fetching data:", error);
       }
     };
 
