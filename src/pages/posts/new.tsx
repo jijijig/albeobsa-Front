@@ -94,7 +94,9 @@ export default function NewPost() {
             modules={modules}
             formats={formats}
             value={content}
-            onChange={(value) => setContent(value)}
+            onChange={(value: React.SetStateAction<string>) =>
+              setContent(value)
+            }
           />
         </div>
         <div className="form-group">

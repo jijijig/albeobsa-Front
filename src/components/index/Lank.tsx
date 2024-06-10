@@ -9,7 +9,7 @@ interface Item {
   image: string;
   name: string;
   label: string;
-  subLabel: string;
+  subLabel: string; // subLabel 속성 추가
   commentCnt: number;
   recommendCnt: number;
   title: string;
@@ -20,23 +20,33 @@ interface Item {
 export default function Lank() {
   const [data, setData] = useState<Item[]>([]);
   const [visibleCount, setVisibleCount] = useState(3);
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+
+  const fetchData = async (page: number) => {
+    const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/crawling/ranking?page=${page}`;
+    console.log("서버에 데이터 요청을 시작합니다. 랭킹 페이지:", page);
+
+    setLoading(true);
+
+    try {
+      const response = await axios.get<Item[]>(apiUrl);
+      console.log("서버 응답:", response.data);
+      setData((prevData) => [...prevData, ...response.data]);
+      console.log("랭킹 데이터 처리");
+    } catch (error) {
+      console.error("랭킹 긁어오기 실패", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/crawling/ranking`;
-    console.log("서버에 데이터 요청을 시작합니다. 랭킹");
+    fetchData(page);
+  }, [page]);
 
-    axios
-      .get<Item[]>(apiUrl)
-      .then((response) => {
-        console.log("서버 응답:", response.data);
-        setData(response.data);
-        console.log("랭킹 데이터 처리fdsfsdfs");
-      })
-      .catch((error) => {
-        console.error("랭킹 긁어오기 실패dsfasdf", error);
-      });
-
-    function handleResize() {
+  useEffect(() => {
+    const handleResize = () => {
       const width = window.innerWidth;
       if (width < 550) {
         setVisibleCount(1);
@@ -47,7 +57,7 @@ export default function Lank() {
       } else if (width < 1600) {
         setVisibleCount(4);
       }
-    }
+    };
 
     window.addEventListener("resize", handleResize);
     handleResize();
@@ -58,8 +68,26 @@ export default function Lank() {
   }, []);
 
   useEffect(() => {
-    console.log("랭킹 데이터 업데이트", data);
-  }, [data]);
+    const handleScroll = () => {
+      if (
+        window.innerHeight + document.documentElement.scrollTop >=
+          document.documentElement.offsetHeight - 10 &&
+        !loading
+      ) {
+        console.log("페이지 끝에 도달");
+        setLoading(true);
+        setTimeout(() => {
+          setPage((prevPage) => prevPage + 1);
+        }, 5000); // 5초 딜레이
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [loading]);
 
   return (
     <div css={style}>

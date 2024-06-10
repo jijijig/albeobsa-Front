@@ -21,6 +21,7 @@ interface HotDeal {
   unrecommendCnt: number;
   commentCnt: number;
   open: boolean;
+  subLabel: string;
 }
 export default function Home() {
   const [hotDeals, setHotDeals] = useState<HotDeal[]>([]);
@@ -58,11 +59,6 @@ export default function Home() {
       </div>
       <div className="deal">
         <Deal />
-      </div>
-      <div className="hotdeal">
-        {hotDeals.map((deal, index) => (
-          <Hotbox key={index} deal={deal} />
-        ))}
       </div>
     </div>
   );
