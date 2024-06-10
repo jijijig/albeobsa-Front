@@ -46,6 +46,11 @@ export default function Navbar() {
   const handleClick = () => {
     router.push("/");
   };
+  const handleSearch = () => {
+    if (search.trim()) {
+      router.push(`/search/${search}`);
+    }
+  };
 
   useEffect(() => {
     const token = localStorage.getItem("authToken");
@@ -149,9 +154,16 @@ export default function Navbar() {
           <input
             type="text"
             placeholder="검색"
+            value={search}
             onChange={(event) => setSearch(event.target.value)}
+            onKeyPress={(event) => {
+              if (event.key === "Enter") {
+                handleSearch();
+              }
+            }}
           />
         </div>
+        <button onClick={handleSearch}>검색</button>
 
         {isLoggedIn && user && (
           <div className="user-box" onClick={handleLogout}>
@@ -218,7 +230,6 @@ export default function Navbar() {
     </div>
   );
 }
-
 const container = css`
   display: flex;
   padding: 10px 62px;
@@ -227,6 +238,16 @@ const container = css`
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
+  button {
+    align-items: center;
+    background-color: #995dff;
+    color: white;
+    border-radius: 20px;
+    cursor: pointer;
+    text-align: center;
+    width: 100px;
+    height: 40px;
+  }
 
   .slide-menu {
     display: flex;

@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
@@ -47,7 +47,6 @@ const formats = [
 export default function NewPost() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [memberName, setMemberName] = useState("");
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -56,18 +55,23 @@ export default function NewPost() {
     const newPost = {
       title,
       content,
-      memberName,
-      heartCnt: 0,
-      commentCnt: 0,
-      createdAt: new Date().toISOString().split("T")[0],
-      lastModifiedAt: new Date().toISOString().split("T")[0],
-      comments: "",
     };
 
+    const token = localStorage.getItem("authToken"); // 로컬 스토리지에서 토큰을 가져옵니다.
+
     try {
-      const response = await axios.post("/api/boards", newPost);
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/boards/post`,
+        newPost,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // 헤더에 토큰을 추가합니다.
+            "Content-Type": "application/json", // JSON 요청임을 명시합니다.
+          },
+        }
+      );
       console.log("게시글 생성 성공:", response.data);
-      router.push("/"); // 게시글 생성 후 메인 페이지로 이동
+      router.push("/");
     } catch (error) {
       console.error("게시글 생성 실패:", error);
     }
@@ -99,16 +103,7 @@ export default function NewPost() {
             }
           />
         </div>
-        <div className="form-group">
-          <label htmlFor="memberName">작성자</label>
-          <input
-            type="text"
-            id="memberName"
-            value={memberName}
-            onChange={(e) => setMemberName(e.target.value)}
-            required
-          />
-        </div>
+
         <button type="submit">게시글 생성</button>
       </form>
     </div>

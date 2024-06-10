@@ -49,7 +49,7 @@ const style = css`
     button {
       width: 134px;
       height: 42px;
-      background-color: #bceb00;
+      background-color: #995dff;
       border-radius: 100px;
       font-family: Poppins;
       font-size: 16px;

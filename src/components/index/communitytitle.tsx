@@ -5,11 +5,12 @@ import Image from "next/image";
 import axios from "axios";
 
 interface Title {
-  date: string;
+  id: number;
+  createdAt: string;
   img: string;
-  nickname: string;
+  memberName: string;
   title: string;
-  comment: number;
+  commentCnt: number;
   views: string;
 }
 
@@ -20,10 +21,14 @@ export default function CommunityTitle() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/crawling/ranking`
+          `${process.env.NEXT_PUBLIC_API_URL}/api/boards`
         );
-        setTitleList(response.data);
-        console.log(response.data);
+        if (response.data && Array.isArray(response.data.content)) {
+          setTitleList(response.data.content);
+          console.log(response.data.content);
+        } else {
+          console.error("Unexpected data format:", response.data);
+        }
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -35,29 +40,23 @@ export default function CommunityTitle() {
   return (
     <div css={style}>
       <table>
-        <tbody>
+        <thead>
           <tr className="name_title">
-            <td>날짜</td>
-            <td className="nicknames">작성자</td>
-            <td className="titles">제목</td>
-            <td>댓글</td>
-            <td></td>
+            <th>날짜</th>
+            <th className="nicknames">작성자</th>
+            <th className="titles">제목</th>
+            <th>댓글</th>
+            <th></th>
           </tr>
+        </thead>
+        <tbody>
           {titleList.map((title, index) => (
-            <tr key={index}>
-              <td className="left">{title.date}</td>
-              <td className="nickname">
-                <Image
-                  src={title.img}
-                  width={30}
-                  height={30}
-                  alt="상품 이미지"
-                />
-                {title.nickname}
-              </td>
+            <tr key={title.id}>
+              <td className="left">{title.createdAt}</td>
+              <td className="nickname">{title.memberName}</td>
               <td className="titles">{title.title}</td>
               <td className="comment">
-                <div className="circle">{title.comment}</div>{" "}
+                <div className="circle">{title.commentCnt}</div>
               </td>
               <td className="right">
                 <svg
@@ -139,6 +138,7 @@ const style = css`
     .nickname {
       display: flex;
       align-items: center;
+      justify-content: center;
       gap: 10px;
       width: 180px;
     }
@@ -155,7 +155,7 @@ const style = css`
       width: 20px;
       height: 20px;
       border-radius: 50%;
-      background-color: #bceb00;
+      background-color: #e0ceff;
       font-family: Poppins;
       font-size: 8px;
       line-height: 12px;
