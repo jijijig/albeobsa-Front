@@ -21,7 +21,7 @@ export default function CommunityPage() {
         </button>
       </div>
       <div className="constents">
-        <Community />
+        <Alddle />
       </div>
       <div className="second">
         <Freeboard />

@@ -285,7 +285,9 @@ export default function PostDetails() {
               onChange={(e) => setNewComment(e.target.value)}
               placeholder="댓글을 입력하세요..."
             />
-            <button onClick={handleCommentSubmit}>댓글 작성</button>
+            <button className="submit" onClick={handleCommentSubmit}>
+              댓글 작성
+            </button>
           </div>
         </div>
       </div>

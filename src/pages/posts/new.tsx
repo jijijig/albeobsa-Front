@@ -74,6 +74,7 @@ export default function NewPost() {
       router.push("/");
     } catch (error) {
       console.error("게시글 생성 실패:", error);
+      alert("게시글 생성에 실패했습니다.");
     }
   };
 
@@ -104,7 +105,9 @@ export default function NewPost() {
           />
         </div>
 
-        <button type="submit">게시글 생성</button>
+        <button className="submit" type="submit">
+          게시글 생성
+        </button>
       </form>
     </div>
   );
@@ -156,19 +159,19 @@ const styles = css`
       }
     }
 
-    button {
+    .submit {
       width: 100%;
       padding: 10px;
       border: none;
       border-radius: 4px;
-      background-color: #5cb85c;
+      background-color: #995dff;
       color: #fff;
       font-size: 16px;
       font-weight: bold;
       cursor: pointer;
 
       &:hover {
-        background-color: #4cae4c;
+        background-color: #7743ff;
       }
     }
 

@@ -14,7 +14,7 @@ export default function community() {
   return (
     <div css={style}>
       <div className="constents">
-        <div className="title">커뮤니티 인기글</div>
+        <div className="title">커뮤니티 최신글</div>
         <div>
           <Communitytitle />
         </div>

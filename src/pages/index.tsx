@@ -7,7 +7,7 @@ import Lank from "@/components/index/Lank";
 import Community from "@/components/index/community";
 import Deal from "@/components/index/deal/deal";
 import RealTimeSearch from "@/components/index/RealTimeSearch";
-import Hotbox from "@/components/hotdeal/hotbox";
+import Hotdeals from "./hotdeals";
 
 interface HotDeal {
   label: string;
@@ -57,9 +57,8 @@ export default function Home() {
       <div className="community">
         <Community />
       </div>
-      <div className="deal">
-        <Deal />
-      </div>
+      <h2>실시간 핫딜</h2>
+      <Hotdeals />
     </div>
   );
 }
@@ -102,6 +101,15 @@ const styles = css`
     justify-content: center;
     gap: 20px;
 
+    margin-top: 37px;
+  }
+  h2 {
+    font-family: Poppins;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 30px;
+    text-align: left;
+    color: #858585;
     margin-top: 37px;
   }
 `;

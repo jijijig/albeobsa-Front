@@ -1,7 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import React, { useState, useEffect } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import axios from "axios";
 
@@ -14,15 +13,29 @@ interface Title {
   commentCnt: number;
   views: string;
 }
-
+const reasons = [
+  { value: "INAPPROPRIATE_CONTENT", label: "부적절한 내용" },
+  { value: "MISINFORMATION", label: "허위 정보" },
+  { value: "SPAM", label: "스팸" },
+  { value: "OTHER", label: "기타" },
+];
 export default function CommunityTitle() {
   const [titleList, setTitleList] = useState<Title[]>([]);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [reportReason, setReportReason] = useState<string>(
+    "INAPPROPRIATE_CONTENT"
+  );
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/boards`
+          `${process.env.NEXT_PUBLIC_API_URL}/api/boards`,
+          {
+            params: {
+              sort: "createdAt,desc", // 최신순으로 정렬
+            },
+          }
         );
         if (response.data && Array.isArray(response.data.content)) {
           setTitleList(response.data.content);
@@ -38,6 +51,35 @@ export default function CommunityTitle() {
     fetchData();
   }, []);
 
+  const handleReport = async (boardId: number) => {
+    try {
+      const token = localStorage.getItem("authToken");
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/reports/${boardId}`,
+        null,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          params: { reason: reportReason },
+        }
+      );
+      console.log("Report response:", response);
+      alert("신고가 접수되었습니다.");
+    } catch (error: any) {
+      console.error("Error reporting post:", error);
+      if (error.response) {
+        console.error("Response data:", error.response.data);
+        console.error("Response status:", error.response.status);
+        console.error("Response headers:", error.response.headers);
+      } else if (error.request) {
+        console.error("Request data:", error.request);
+      } else {
+        console.error("Error message:", error.message);
+      }
+      alert("신고 접수에 실패했습니다.");
+    }
+  };
   return (
     <div css={style}>
       <table>
@@ -61,7 +103,10 @@ export default function CommunityTitle() {
               <td className="comment">
                 <div className="circle">{title.commentCnt}</div>
               </td>
-              <td className="right">
+              <td
+                className="right"
+                onMouseEnter={() => setHoveredIndex(index)}
+                onMouseLeave={() => setHoveredIndex(null)}>
                 <svg
                   width="16"
                   height="4"
@@ -81,6 +126,20 @@ export default function CommunityTitle() {
                     fill="#858585"
                   />
                 </svg>
+                {hoveredIndex === index && (
+                  <div className="report-container">
+                    <select
+                      value={reportReason}
+                      onChange={(e) => setReportReason(e.target.value)}>
+                      {reasons.map((reason) => (
+                        <option key={reason.value} value={reason.value}>
+                          {reason.label}
+                        </option>
+                      ))}
+                    </select>
+                    <button onClick={() => handleReport(title.id)}>신고</button>
+                  </div>
+                )}
               </td>
             </tr>
           ))}
@@ -133,10 +192,15 @@ const style = css`
       width: 60px;
     }
     .right {
+      position: relative;
       border-radius: 0px 100px 100px 0px;
       border: 1px solid #f0f0f0;
       border-left: 0;
       width: 10px;
+
+      svg {
+        cursor: pointer;
+      }
     }
     .nickname {
       display: flex;
@@ -174,6 +238,30 @@ const style = css`
     a {
       text-decoration: none;
       color: inherit;
+    }
+    .report-container {
+      position: absolute;
+      top: 0px;
+      right: 0;
+      padding: 5px;
+      background-color: white;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+      select {
+        margin-bottom: 5px;
+      }
+
+      button {
+        padding: 5px 10px;
+        background-color: #ff4d4d;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 10px;
+      }
     }
   }
 `;
