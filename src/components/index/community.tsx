@@ -1,9 +1,16 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import React from "react";
+import { useRouter } from "next/router";
 import Communitytitle from "./communitytitle";
 
 export default function community() {
+  const router = useRouter();
+
+  const handleMoreClick = () => {
+    router.push("/community");
+  };
+
   return (
     <div css={style}>
       <div className="constents">
@@ -12,7 +19,7 @@ export default function community() {
           <Communitytitle />
         </div>
         <div className="bottom">
-          <button>더보기</button>
+          <button onClick={handleMoreClick}>더보기</button>
         </div>
       </div>
     </div>

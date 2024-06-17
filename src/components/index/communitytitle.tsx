@@ -2,6 +2,7 @@
 import { css } from "@emotion/react";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import axios from "axios";
 
 interface Title {
@@ -50,11 +51,13 @@ export default function CommunityTitle() {
           </tr>
         </thead>
         <tbody>
-          {titleList.map((title, index) => (
+          {titleList.slice(0, 5).map((title, index) => (
             <tr key={title.id}>
               <td className="left">{title.createdAt}</td>
               <td className="nickname">{title.memberName}</td>
-              <td className="titles">{title.title}</td>
+              <td className="titles">
+                <Link href={`/posts/${title.id}`}>{title.title}</Link>
+              </td>
               <td className="comment">
                 <div className="circle">{title.commentCnt}</div>
               </td>
@@ -167,6 +170,10 @@ const style = css`
     }
     img {
       border-radius: 50%;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
     }
   }
 `;
