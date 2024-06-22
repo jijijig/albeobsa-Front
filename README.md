@@ -1,40 +1,84 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Albeobsa - Front
 
-## Getting Started
+## 소개   
+"알법사"는 '알뜰 마법사'의 줄임말로, 고물가 시대에 소비자들의 현명한 소비를 돕기 위해 탄생한 서비스입니다. 
+'알뜰 마법사'는 마법처럼 간편하게 최저가 상품을 찾아줍니다.
 
-First, run the development server:
+### 술로건
+고물가 시대에 스마트한 쇼핑, 최저가로 현명하게
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## 스크립트
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+- **dev:** `next dev`
+- **build:** `next build`
+- **start:** `next start`
+- **lint:** `next lint`
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## 의존성 (Dependencies)
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- **@emotion/css:** ^11.11.2
+- **@emotion/react:** ^11.11.4
+- **@emotion/server:** ^11.11.0
+- **@emotion/styled:** ^11.11.5
+- **axios:** ^1.7.2
+- **next:** ^14.2.3
+- **react:** ^18
+- **react-dom:** ^18
+- **react-quill:** ^2.0.0
 
-## Learn More
+## 개발 의존성 (DevDependencies)
 
-To learn more about Next.js, take a look at the following resources:
+- **@types/axios:** ^0.14.0
+- **@types/node:** ^20
+- **@types/react:** ^18
+- **@types/react-dom:** ^18
+- **typescript:** ^5
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 1.2. 기술 스택
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+| 카테고리            | 사용된 라이브러리           |
+|---------------------|----------------------------|
+| JavaScript          | JavaScript ES6             |
+| Next.js             | 14.2.3                     |
+| React               | 18.2.0                     |
+| React DOM           | 18.2.0                     |
+| 스타일링            | @emotion/css, @emotion/react, @emotion/server, @emotion/styled |
+| 리치 텍스트 에디터  | react-quill 2.0.0          |
+| HTTP 클라이언트     | axios 1.7.2                |
+| TypeScript          | 5.0.0                      |
+| 타입 정의           | @types/axios, @types/node, @types/react, @types/react-dom |
+| 린팅                | next lint                  |
+| 개발 서버           | next dev                   |
+| 빌드 도구           | next build                 |
+| 프로덕션 서버       | next start                 |
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 실행 방법
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+1. **레포지토리 클론:**
+    ```bash
+    git clone https://github.com/jijijig/albeobsa-Front
+    cd albeobsa
+    ```
+
+2. **의존성 설치:**
+    ```bash
+    npm install
+    ```
+
+3. **개발 서버 시작:**
+    ```bash
+    npm run dev
+    ```
+    개발 서버는 기본적으로 [http://localhost:3000](http://localhost:3000)에서 실행됩니다.
+
+4. **프로덕션 빌드 및 시작:**
+    ```bash
+    npm run build
+    npm start
+    ```
+    프로덕션 서버는 기본적으로 [http://localhost:3000](http://localhost:3000)에서 실행됩니다.
+
+
