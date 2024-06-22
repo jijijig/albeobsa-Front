@@ -8,6 +8,7 @@ import Leftbar from "@/components/leftbar";
 import MobileView from "@/components/MobileView";
 import { Inter } from "next/font/google";
 import { useEffect, useState } from "react";
+import "react-quill/dist/quill.snow.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -71,6 +72,10 @@ export default function App({ Component, pageProps }: AppProps) {
         <meta name="description" content="알뜰마법사 입니다." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7468972179217107"
+          crossOrigin="anonymous"></script>
       </Head>
       {isMobile ? (
         <MobileView />

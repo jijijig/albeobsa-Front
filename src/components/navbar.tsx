@@ -5,37 +5,37 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import Mainpage from "@/styles/icon/mainpage";
-import Community from "@/styles/icon/community";
-import Revew from "@/styles/icon/revew";
-import Rank from "@/styles/icon/rank";
-import Hotdeal from "@/styles/icon/hotdeil";
-import Setting from "@/styles/icon/setting";
 
 interface User {
   img: string;
   email: string;
   name: string;
 }
-const categories = [
-  { id: 1, name: "메인 페이지", path: "/", icon: <Mainpage /> },
-  { id: 2, name: "커뮤니티", path: "/community", icon: <Community /> },
-  { id: 3, name: "후기", path: "/reviews", icon: <Revew /> },
-  { id: 4, name: "랭킹", path: "/ranking", icon: <Rank /> },
-  { id: 5, name: "핫딜", path: "/hotdeals", icon: <Hotdeal /> },
-  { id: 6, name: "설정", path: "/settings", icon: <Setting /> },
-  { id: 7, name: "로그인", path: "/login" },
-];
 
 export default function Navbar() {
   const router = useRouter();
   const [search, setSearch] = useState("");
-  const [user, setUser] = useState<User[]>([]);
+  const [user, setUser] = useState<User | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [menu, setMenu] = useState(false);
 
-  const handleClicks = (path: string) => {
-    router.push(path);
+  const handleGoogleLogin = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/member/authenticate`
+      );
+      console.log(response.data);
+      const loginUrl = response.data;
+      window.location.href = loginUrl;
+    } catch (error) {
+      console.error("Failed to get Google login URL", error);
+    }
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("authToken");
+    setIsLoggedIn(false);
+    router.push("/");
   };
 
   const toggleMenu = () => {
@@ -46,24 +46,65 @@ export default function Navbar() {
   const handleClick = () => {
     router.push("/");
   };
+  const handleSearch = () => {
+    if (search.trim()) {
+      router.push(`/search/${search}`);
+    }
+  };
 
   useEffect(() => {
     const token = localStorage.getItem("authToken");
     if (token) {
       setIsLoggedIn(true);
+      const email = localStorage.getItem("email");
+      const name = localStorage.getItem("name");
+      const picture = localStorage.getItem("picture");
+      if (email && name && picture) {
+        setUser({ email, name, img: picture });
+      }
     }
   }, []);
 
   useEffect(() => {
-    axios
-      .get(process.env.NEXT_PUBLIC_API_URL + "/api/crawling")
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.error("로그인 실패 ", error);
-      });
-  }, []);
+    const { code } = router.query;
+    if (code) {
+      const authenticateUser = async () => {
+        try {
+          const response = await axios.post(
+            `${process.env.NEXT_PUBLIC_API_URL}/api/member/login?code=${code}`,
+            { code },
+            {
+              headers: {
+                Accept: "application/json;charset=UTF-8",
+              },
+            }
+          );
+
+          console.log("로그인 성공", response);
+          localStorage.setItem("authToken", response.data.tokens.accessToken);
+          localStorage.setItem(
+            "refreshToken",
+            response.data.tokens.refreshToken
+          );
+          localStorage.setItem("grantType", response.data.tokens.grantType);
+          localStorage.setItem("email", response.data.memberDTO.email);
+          localStorage.setItem("name", response.data.memberDTO.name);
+          localStorage.setItem("picture", response.data.memberDTO.picture);
+          setIsLoggedIn(true);
+          setUser({
+            email: response.data.memberDTO.email,
+            name: response.data.memberDTO.name,
+            img: response.data.memberDTO.picture,
+          });
+          router.push("/");
+        } catch (error) {
+          console.log("로그인 실패", code);
+          console.error("Authentication 실패", error);
+        }
+      };
+      authenticateUser();
+    }
+  }, [router.query]);
 
   return (
     <div css={container}>
@@ -77,9 +118,9 @@ export default function Navbar() {
           <path
             d="M18.7612 37.9776H25.5522C27.0149 37.9776 29.5 36 29.5 33.3454C29.5 29.5 27 28.7132 25 28.7132C24.4776 28.7132 25.0224 28.5 24.5 28.5C17.5 14.5 16.5 7.99995 13 8.4999C13 9.4999 10 21.4999 6.22388 28.7132H5.1791C2.8806 28.7132 1 30.8087 1 33.3454C1 35.8821 2.8806 37.9776 5.1791 37.9776H10.403H18.7612Z"
             stroke="#A775FF"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           />
           <path
             d="M17.75 30.7633H13.25L12.4211 33H11L14.7303 23H16.2845L20 33H18.5789L17.75 30.7633ZM17.3651 29.6955L15.5 24.6162L13.6349 29.6955H17.3651Z"
@@ -113,25 +154,28 @@ export default function Navbar() {
           <input
             type="text"
             placeholder="검색"
+            value={search}
             onChange={(event) => setSearch(event.target.value)}
+            onKeyPress={(event) => {
+              if (event.key === "Enter") {
+                handleSearch();
+              }
+            }}
           />
         </div>
-        {isLoggedIn && (
-          <div className="user-box">
+        <button onClick={handleSearch}>검색</button>
+
+        {isLoggedIn && user && (
+          <div className="user-box" onClick={handleLogout}>
             <div className="img-box">
-              <Image
-                src={user[0].img}
-                width={36}
-                height={36}
-                alt="user profile"
-              />
+              <Image src={user.img} width={36} height={36} alt="user profile" />
             </div>
-            {user[0].name}
+            {user.name}
           </div>
         )}
 
         {!isLoggedIn && (
-          <button className="loginbutton">
+          <button className="loginbutton" onClick={handleGoogleLogin}>
             <svg
               width="30"
               height="30"
@@ -182,29 +226,10 @@ export default function Navbar() {
             strokeLinejoin="round"
           />
         </svg>
-
-        <div className={`slide-menu ${menu ? "open" : ""}`}>
-          <ul>
-            {categories.map((category) => (
-              <li
-                key={category.id}
-                css={
-                  router.pathname === category.path
-                    ? activeCategoryStyle
-                    : undefined
-                }
-                onClick={() => handleClicks(category.path)}>
-                <div className="icon">{category.icon}</div>
-                {category.name}
-              </li>
-            ))}
-          </ul>
-        </div>
       </div>
     </div>
   );
 }
-
 const container = css`
   display: flex;
   padding: 10px 62px;
@@ -213,7 +238,16 @@ const container = css`
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
-  
+  button {
+    align-items: center;
+    background-color: #995dff;
+    color: white;
+    border-radius: 20px;
+    cursor: pointer;
+    text-align: center;
+    width: 100px;
+    height: 40px;
+  }
 
   .slide-menu {
     display: flex;
@@ -223,12 +257,12 @@ const container = css`
     align-items: center;
     cursor: pointer;
     position: fixed;
-    width: 250px; 
+    width: 250px;
     background-color: white;
     top: 52px;
     right: -250px;
-    transition: right 0.3s; 
-    z-index: 1000; 
+    transition: right 0.3s;
+    z-index: 1000;
   }
   ul {
     list-style: none;
@@ -257,11 +291,10 @@ const container = css`
     margin-right: 10px;
   }
 
-
   .slide-menu.open {
     right: 0;
   }
-  
+
   .nav-rightnext {
     display: none;
     cursor: pointer;
@@ -295,7 +328,7 @@ const container = css`
     width: 100%;
     height: 40px;
     border-radius: 100px;
-    border: 1px solid #995DFF;
+    border: 1px solid #995dff;
   }
   .nav-right {
     display: flex;
@@ -321,7 +354,7 @@ const container = css`
     justify-content: center;
     gap: 10px;
     align-items: center;
-    background-color: #995DFF;
+    background-color: #995dff;
     color: white;
     width: 400px;
     height: 42px;
@@ -338,14 +371,15 @@ const container = css`
   .nav-rightnext {
     display: none;
     cursor: pointer;
-  } 
+  }
   @media (max-width: 550px) {
-    .nav-right{
+    .nav-right {
       display: none;
     }
     .nav-rightnext {
-    display: block;
+      display: block;
     }
+  }
 `;
 
 const activeCategoryStyle = css`
